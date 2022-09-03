@@ -19,7 +19,7 @@ func GetRecord(domain string, params *models.Params) *models.DNSRecord {
 		RefreshAccess(params)
 		return GetRecord(domain, params)
 	} else if resp.StatusCode != 200 {
-		log.Fatal("Error: " + resp.Status)
+		log.Fatal("Error getting record " + domain + ": " + resp.Status)
 	}
 	err = json.NewDecoder(resp.Body).Decode(&record)
 	if err != nil {

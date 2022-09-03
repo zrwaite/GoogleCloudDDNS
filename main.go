@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
+	"log"
 	"os"
 
 	"github.com/zrwaite/google-cloud-ddns/models"
@@ -32,5 +34,17 @@ func main() {
 		requests.PatchRecords(records, currentIP, &params)
 	} else {
 		fmt.Println("IPs match, no update needed")
+	}
+	if params.RefreshAttempted {
+		fmt.Println("Updating access token")
+		params.RefreshAttempted = false
+		content, err := json.Marshal(params)
+		if err != nil {
+			fmt.Println(err)
+		}
+		err = ioutil.WriteFile("params.json", content, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }

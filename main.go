@@ -32,12 +32,12 @@ func main() {
 
 	initialRecord := requests.GetRecord(params.Domains[0], &params)
 	currentIP := requests.GetIP()
-	records := []models.DNSRecord{}
-	for _, domain := range params.Domains {
-		records = append(records, *requests.GetRecord(domain, &params))
-	}
 
 	if initialRecord.Rrdatas[0] != currentIP {
+		records := []models.DNSRecord{}
+		for _, domain := range params.Domains {
+			records = append(records, *requests.GetRecord(domain, &params))
+		}
 		fmt.Println("newip: <" + currentIP + ">")
 		requests.PatchRecords(records, currentIP, &params)
 	}

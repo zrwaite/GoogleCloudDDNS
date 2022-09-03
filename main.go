@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"path"
+	"path/filepath"
 	"io"
 	"io/ioutil"
 	"log"
@@ -13,7 +15,13 @@ import (
 )
 
 func main() {
-	file, err := os.Open("params.json")
+	ex, err := os.Executable()
+    if err != nil {
+        panic(err)
+    }
+    exPath := filepath.Dir(ex)
+    paramsFilePath := path.Join(exPath, "params.json")
+	file, err := os.Open(paramsFilePath)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -32,8 +40,6 @@ func main() {
 	if initialRecord.Rrdatas[0] != currentIP {
 		fmt.Println("newip: <" + currentIP + ">")
 		requests.PatchRecords(records, currentIP, &params)
-	} else {
-		fmt.Println("IPs match, no update needed")
 	}
 	if params.RefreshAttempted {
 		fmt.Println("Updating access token")
@@ -42,7 +48,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		err = ioutil.WriteFile("params.json", content, 0644)
+		err = ioutil.WriteFile(paramsFilePath, content, 0644)
 		if err != nil {
 			log.Fatal(err)
 		}

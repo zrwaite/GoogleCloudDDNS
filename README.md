@@ -4,7 +4,7 @@ My server has a dynamic DNS, but I want to point all my domains at it's nginx in
 
 This script runs with a cronjob on the server and updates the google cloud DNS records upon a change.
 
-Todo:
+Add to crontab script (`crontab -e`): `* * * * * <your dir>/logcron.sh`
 
--   Update filename grabber easier cronjob implementation.
+Todo:
 -   Perhaps make it more abstract for people to fork.

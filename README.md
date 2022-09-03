@@ -6,5 +6,5 @@ This script runs with a cronjob on the server and updates the google cloud DNS r
 
 Todo:
 
--   Add script for easier cronjob implementation.
+-   Update filename grabber easier cronjob implementation.
 -   Perhaps make it more abstract for people to fork.

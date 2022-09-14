@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"fmt"
 
 	"github.com/zrwaite/google-cloud-ddns/mail"
 	"github.com/zrwaite/google-cloud-ddns/models"
@@ -12,8 +13,8 @@ import (
 
 func RefreshAccess(params *models.Params) {
 	if params.RefreshAttempted {
-		log.Fatal("Error: Refresh failed multiple times")
 		mail.ErrorMessage("Error: Refresh failed multiple times", params)
+		log.Fatal("Error: Refresh failed multiple times")
 	}
 	params.RefreshAttempted = true
 
@@ -36,7 +37,8 @@ func RefreshAccess(params *models.Params) {
 		log.Fatal(err)
 	}
 	if resp.StatusCode != 200 {
-		log.Fatal("Error refreshing token: " + resp.Status)
+		fmt.Println("Error refreshing token: " + resp.Status)
+		log.Fatal(resp)
 	}
 	var access models.Access
 	err = json.NewDecoder(resp.Body).Decode(&access)

@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"log"
+	"fmt"
 
 	"github.com/zrwaite/google-cloud-ddns/models"
+	"github.com/zrwaite/google-cloud-ddns/mail"
 )
 
 func PatchRecords(records []models.DNSRecord, updatedIP string, params *models.Params) {
+	mail.IPMessage(fmt.Sprintf(updatedIP), params)
 	patch := new(models.DNSPatch)
 	for _, record := range records {
 		patch.Deletions = append(patch.Deletions, record)
@@ -36,6 +39,7 @@ func PatchRecords(records []models.DNSRecord, updatedIP string, params *models.P
 		return
 	}
 	if resp.StatusCode != 200 {
+		mail.ErrorMessage("Error: patching records", params)
 		log.Fatal("Error patching records: " + resp.Status)
 	}
 }

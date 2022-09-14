@@ -27,3 +27,8 @@ func ErrorMessage(content string, params *models.Params) (success bool) {
 	subject := "Error on google-cloud-ddns"
 	return SendMessage(params.ContactEmail, "Zac Waite", subject, content, params)
 }
+
+func IPMessage(content string, params *models.Params) (success bool) {
+	subject := "IP Updated on server"
+	return SendMessage(params.ContactEmail, "Zac Waite", subject, content, params)
+}

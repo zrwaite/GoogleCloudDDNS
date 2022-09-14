@@ -6,12 +6,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/zrwaite/google-cloud-ddns/mail"
 	"github.com/zrwaite/google-cloud-ddns/models"
 )
 
 func RefreshAccess(params *models.Params) {
 	if params.RefreshAttempted {
 		log.Fatal("Error: Refresh failed multiple times")
+		mail.ErrorMessage("Error: Refresh failed multiple times", params)
 	}
 	params.RefreshAttempted = true
 

@@ -1,10 +1,9 @@
 {
-	"client_id": "",
-    "client_secret": "",
 	"access_token": "",
-	"refresh_token": "",
+	"jwt_key": "",
+	"iss": "",
 	"contact_email": "",
 	"from_email": "",
 	"sendgrid_api_key": "",
-	"domains": [""]
+	"domains": []
 }

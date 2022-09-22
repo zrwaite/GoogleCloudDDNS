@@ -3,11 +3,11 @@ package requests
 import (
 	"bytes"
 	"encoding/json"
-	"log"
 	"fmt"
+	"log"
 
-	"github.com/zrwaite/google-cloud-ddns/models"
 	"github.com/zrwaite/google-cloud-ddns/mail"
+	"github.com/zrwaite/google-cloud-ddns/models"
 )
 
 func PatchRecords(records []models.DNSRecord, updatedIP string, params *models.Params) {

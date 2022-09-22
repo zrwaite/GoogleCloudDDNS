@@ -3,10 +3,11 @@ package requests
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"fmt"
 
+	"github.com/zrwaite/google-cloud-ddns/auth"
 	"github.com/zrwaite/google-cloud-ddns/mail"
 	"github.com/zrwaite/google-cloud-ddns/models"
 )
@@ -18,11 +19,14 @@ func RefreshAccess(params *models.Params) {
 	}
 	params.RefreshAttempted = true
 
+	token, tokenSuccess := auth.EncodeToken(params)
+	if !tokenSuccess {
+		mail.ErrorMessage("Error: Refresh failed", params)
+		log.Fatal("Error: Refresh failed")
+	}
 	refresh := models.Refresh{
-		RefreshToken: params.RefreshToken,
-		ClientID:     params.ClientID,
-		ClientSecret: params.ClientSecret,
-		GrantType:    "refresh_token",
+		Assertion: token,
+		GrantType: "urn:ietf:params:oauth:grant-type:jwt-bearer",
 	}
 
 	json_data, err := json.Marshal(refresh)

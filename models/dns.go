@@ -13,10 +13,8 @@ type DNSPatch struct {
 }
 
 type Refresh struct {
-	ClientID     string `json:"client_id"`
-	ClientSecret string `json:"client_secret"`
-	RefreshToken string `json:"refresh_token"`
-	GrantType    string `json:"grant_type"`
+	Assertion string `json:"assertion"`
+	GrantType string `json:"grant_type"`
 }
 
 type Access struct {

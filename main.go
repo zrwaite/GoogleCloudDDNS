@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"path"
-	"path/filepath"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
+	"path/filepath"
 
 	"github.com/zrwaite/google-cloud-ddns/models"
 	"github.com/zrwaite/google-cloud-ddns/requests"
@@ -16,11 +16,11 @@ import (
 
 func main() {
 	ex, err := os.Executable()
-    if err != nil {
-        panic(err)
-    }
-    exPath := filepath.Dir(ex)
-    paramsFilePath := path.Join(exPath, "params.json")
+	if err != nil {
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+	paramsFilePath := path.Join(exPath, "params.json")
 	file, err := os.Open(paramsFilePath)
 	if err != nil {
 		fmt.Println(err)
